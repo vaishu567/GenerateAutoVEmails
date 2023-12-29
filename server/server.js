@@ -5,14 +5,18 @@ const { authenticate } = require("@google-cloud/local-auth");
 const fs = require("fs").promises;
 const { google } = require("googleapis");
 const PORT = 4569;
+
+// Define OAuth 2.0 scopes for Gmail API
 const SCOPES = [
   "https://www.googleapis.com/auth/gmail.readonly",
   "https://www.googleapis.com/auth/gmail.send",
   "https://www.googleapis.com/auth/gmail.labels",
   "https://mail.google.com/",
 ];
-
+// Define a label name for Gmail
 const labelName = "GenerateVacay-Mails";
+
+// Define an Express route for Gmail automation
 
 app.get("/automate-gmail", async (req, res) => {
   try {
@@ -28,7 +32,7 @@ app.get("/automate-gmail", async (req, res) => {
       userId: "me",
     });
 
-    // to get unreplied mails from gmail:
+    // Function to get unreplied mails from Gmail
     const gettingUnrepliedMessages = async (auth) => {
       console.log("Function getUnrepliedMessages has been called.");
 
@@ -47,7 +51,7 @@ app.get("/automate-gmail", async (req, res) => {
         throw error; // Re-throw the error for the calling function to handle
       }
     };
-    // for adding label:
+    // Function for adding label to a message
 
     const modifyMessageLabels = async (auth, messageId, labelIdToAdd) => {
       console.log("Function modifyMessageLabels has been called.");
@@ -71,7 +75,7 @@ app.get("/automate-gmail", async (req, res) => {
         return { error };
       }
     };
-    // for creating label:
+    // Function for creating or updating a label
 
     const createOrUpdateLabel = async (auth) => {
       console.log("Function createOrUpdateLabel has been called.");
@@ -112,7 +116,7 @@ app.get("/automate-gmail", async (req, res) => {
         return { error };
       }
     };
-    // for sending replies:
+    // Function for sending replies
     const sendReply = async (auth, message) => {
       console.log("function sendReply got hitted  ");
 
@@ -161,7 +165,7 @@ app.get("/automate-gmail", async (req, res) => {
       console.log(`Reply sent for message with id ${message.id}`);
       return { error: null };
     };
-
+    // Main function for Gmail automation
     const main = async () => {
       console.log("Function main has been called.");
 
@@ -188,10 +192,12 @@ app.get("/automate-gmail", async (req, res) => {
         console.error("Error in main:", error);
       }
     };
-
+    // Call the main function to start Gmail automation
     await main();
+    // Send success response
     res.status(200).send("Gmail automation started successfully.");
   } catch (error) {
+    // Handle errors and send internal
     console.error("Error in Gmail automation:", error);
     res.status(500).send("Internal Server Error");
   }
