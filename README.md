@@ -1,8 +1,8 @@
-Automated Gmail Vacation Responder
+<h1>Automated Gmail Vacation Responder</h1>
 
 This project implements an automated Gmail vacation responder using Node.js and the Gmail API. The application is designed to run as a server and respond to incoming emails with a predefined vacation message, indicating that the recipient is currently away and will respond at the earliest convenience. The automation includes the creation of a custom label in Gmail, identification of unreplied emails in the inbox, and the sending of personalized vacation responses.
 
-Key Features:
+<h4>Key Features:</h4>
 
 OAuth 2.0 Authentication:
 
